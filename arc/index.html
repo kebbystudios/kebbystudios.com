@@ -26,6 +26,7 @@
     </a>
     <nav class="nav-links">
       <a href="#features">Features</a>
+      <a href="#pro">Arc Pro</a>
       <a href="#faq">FAQ</a>
       <a href="support.html">Support</a>
       <a class="pill" href="#app-store" data-app-store>Coming Soon</a>
@@ -51,7 +52,7 @@
             </a>
           </div>
           <ol class="styles" aria-label="Speedometer styles shown">
-            <li data-style="0">Glow</li><li data-style="1">Arc</li><li data-style="2">Donut</li><li data-style="3">Segment</li><li data-style="4">Particle</li><li data-style="5">Sport</li><li data-style="6">Halo</li>
+            <li data-style="0">Glow<span class="pro">PRO</span></li><li data-style="1">Arc</li><li data-style="2">Donut<span class="pro">PRO</span></li><li data-style="3">Segment<span class="pro">PRO</span></li><li data-style="4">Particle<span class="pro">PRO</span></li><li data-style="5">Sport<span class="pro">PRO</span></li><li data-style="6">Halo<span class="pro">PRO</span></li>
           </ol>
         </div>
 
@@ -80,23 +81,36 @@
           <h2>Every trip, on the&nbsp;map.</h2>
           <ul class="points">
             <li><b>A log that keeps itself.</b> Each trip gets its route, places, speed, and elevation.</li>
-            <li><b>Tag it.</b> Sort trips by category and vehicle, or let Arc tag them when it hears your car's Bluetooth.</li>
+            <li><b>Sorted for you.</b> Arc picks the vehicle from the Bluetooth it's connected to, and the category from earlier trips between the same places.</li>
             <li><b>Replay.</b> Watch any trip again with a camera that follows along, at up to 32×.</li>
           </ul>
+          <p class="pro-note"><span class="pro">PRO</span><span>Trips older than 7 days. Arc saves them either way, so Pro opens your whole history.</span></p>
         </div>
 
         <div class="panel panel-right" data-panel="stats">
           <p class="eyebrow">Stats</p>
           <h2>Miles add&nbsp;up.</h2>
           <ul class="points">
-            <li><b>By week, month, and year.</b> Distance, time on the road, and how many trips.</li>
-            <li><b>Personal records.</b> Your longest trip, your top speed, your best streak.</li>
-            <li><b>Fun comparisons.</b> How far you've gone, measured in things that make sense.</li>
+            <li><b>Business mileage, tracked.</b> Work trips tag themselves as Business. Filter Stats to Business to see the year's miles.</li>
+            <li><b>By week, month, and year.</b> Distance, time on the road, and trip counts, by category and vehicle.</li>
+            <li><b>Personal records.</b> Your longest trip, your top speed, and your fastest Chrono runs.</li>
           </ul>
+          <p class="pro-note"><span class="pro">PRO</span><span>Stats beyond the last 7 days. Every trip still counts, so nothing is lost before you upgrade.</span></p>
+        </div>
+
+        <div class="panel panel-right" data-panel="settings">
+          <p class="eyebrow">Settings</p>
+          <h2>Make it your&nbsp;own.</h2>
+          <ol class="shots">
+            <li data-shot="0"><b>Accent Color<span class="pro">PRO</span></b><span>Ten colors that carry through the gauge, charts, and map. Glacier and Chalk are free.</span></li>
+            <li data-shot="1"><b>Speedometer Style<span class="pro">PRO</span></b><span>Fourteen styles, from glowing needles to drifting particles. Arc and Classic are free.</span></li>
+            <li data-shot="2"><b>Trip Categories</b><span>Personal, Business, Commute, Travel, or your own. Turn on Assign Automatically, and trips between familiar places sort themselves.</span></li>
+            <li data-shot="3"><b>Vehicles</b><span>Your car, a rental, and your bike. Link a car's Bluetooth, and every trip taken while it's connected gets that vehicle.</span></li>
+          </ol>
         </div>
 
         <div class="panel panel-right" data-panel="chrono">
-          <p class="eyebrow">Chrono</p>
+          <p class="eyebrow">Chrono <span class="pro">PRO</span></p>
           <h2>For the track&nbsp;day.</h2>
           <p>Time 0–60, 0–100, the quarter mile, and 60–0 braking, straight from GPS. Every run is saved with its trip.</p>
           <p class="disclaimer"><b>For closed-course use only.</b> Obey all traffic laws and never time runs on public roads. Times come from GPS and may differ from other timing equipment.</p>
@@ -108,6 +122,12 @@
             <video class="layer" data-layer="speed" src="media/speed.mp4" poster="media/speed.jpg" muted loop playsinline preload="none"></video>
             <video class="layer" data-layer="trips" src="media/trips.mp4" poster="media/trips.jpg" muted loop playsinline preload="none"></video>
             <video class="layer" data-layer="stats" src="media/stats.mp4" poster="media/stats.jpg" muted loop playsinline preload="none"></video>
+            <div class="layer layer-shots" data-layer="settings">
+              <img src="media/set-accent.webp" alt="" class="on" decoding="async">
+              <img src="media/set-style.webp" alt="" loading="lazy" decoding="async">
+              <img src="media/set-categories.webp" alt="" loading="lazy" decoding="async">
+              <img src="media/set-vehicles.webp" alt="" loading="lazy" decoding="async">
+            </div>
             <video class="layer" data-layer="chrono" src="media/chrono.mp4" poster="media/chrono.jpg" muted loop playsinline preload="none"></video>
           </div>
           <svg class="frame" viewBox="-16 0 1456 2972" preserveAspectRatio="none">
@@ -176,10 +196,39 @@
             <p>No account and no tracking. Your trips stay on your iPhone and in your own iCloud.</p>
           </article>
           <article class="card">
-            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11M7.5 10.5L12 15l4.5-4.5"/><path d="M5 19h14"/></svg>
-            <h3>Export</h3>
-            <p>Take your trips anywhere as GPX or CSV, or share a trip as an image.</p>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="7" width="17" height="12" rx="2.5"/><path d="M9 7V5.5A1.5 1.5 0 0 1 10.5 4h3A1.5 1.5 0 0 1 15 5.5V7M3.5 12.5h17"/></svg>
+            <h3>Mileage Log</h3>
+            <p>Business trips tag themselves. See the year's business miles in Stats, and export trips as CSV or GPX for your records.</p>
           </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="pro-section" id="pro">
+      <div class="wrap">
+        <p class="eyebrow">Arc Pro</p>
+        <h2 class="section-title">Free to start. Pro for the&nbsp;rest.</h2>
+        <p class="section-lede">The speedometer and the trip log are free. Arc keeps recording either way, so when you upgrade, your whole history is already there.</p>
+        <div class="tiers">
+          <div class="tier">
+            <h3>Free</h3>
+            <ul>
+              <li>Live speed in the Arc and Classic styles</li>
+              <li>Glacier and Chalk accents</li>
+              <li>Automatic trips, replays, categories, and vehicles</li>
+              <li>Trips and stats from the last 7 days</li>
+            </ul>
+          </div>
+          <div class="tier tier-pro">
+            <h3>Arc Pro</h3>
+            <ul>
+              <li>All 14 speedometer styles</li>
+              <li>All 10 accent colors</li>
+              <li>Every trip you've ever recorded</li>
+              <li>Stats for any week, month, year, or all time</li>
+              <li>Chrono: 0–60, the quarter mile, and braking</li>
+            </ul>
+          </div>
         </div>
       </div>
     </section>
@@ -199,6 +248,14 @@
         <details>
           <summary>Do I need an account?</summary>
           <p>No. There's no sign-up. Your trips are stored on your iPhone and, if you use iCloud, synced through your own private iCloud account.</p>
+        </details>
+        <details>
+          <summary>What happens to trips older than 7 days without Pro?</summary>
+          <p>They're kept. Arc records and saves every trip whether or not you have Arc Pro. Without it, Trips and Stats show the last 7 days; upgrading opens everything, including trips from before you upgraded.</p>
+        </details>
+        <details>
+          <summary>Can Arc track business mileage?</summary>
+          <p>Yes. Tag a trip as Business once, and turn on Assign Automatically for Business in Settings › Trips › Trip Categories. New trips between the same places are tagged Business on their own. Stats can then show only Business trips for any period, and you can export trips as CSV.</p>
         </details>
         <details>
           <summary>Does Arc use a lot of battery?</summary>

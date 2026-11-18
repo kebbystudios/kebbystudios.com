@@ -1,9 +1,10 @@
 // Arc — scroll story.
 // One pinned stage: the speedometer clip (hero), the phone arriving around it
-// in landscape, turning to portrait, then the Speed, Trips, Stats, and Chrono
-// clips. Scrolling moves the phone into place; from there it stays put while
-// the clips and text crossfade. Each clip plays at normal speed once its step
-// has settled, and loops.
+// in landscape, turning to portrait, then the Speed, Trips, and Stats clips,
+// the Settings screenshots, and Chrono. Scrolling moves the phone into place;
+// from there it stays put while the clips and text crossfade. Each clip plays
+// at normal speed once its step has settled, and loops; the screenshots take
+// turns the same way.
 (() => {
   const story = document.getElementById("story");
   const stage = story.querySelector(".stage");
@@ -16,6 +17,12 @@
   const panels = Object.fromEntries([...stage.querySelectorAll("[data-panel]")].map((el) => [el.dataset.panel, el]));
   const layers = Object.fromEntries([...stage.querySelectorAll("[data-layer]")].map((el) => [el.dataset.layer, el]));
   const styleItems = [...stage.querySelectorAll(".styles li")];
+  const shotImgs = [...layers.settings.querySelectorAll("img")];
+  const shotItems = [...panels.settings.querySelectorAll(".shots li")];
+
+  // Scroll positions below are in vh of scrolling (the story is 1200vh tall,
+  // less one screen).
+  const SPAN = 1100;
 
   // Hero clip: Glow, Arc, Donut, Segment, Particle, Sport, Halo; 2 s each plus
   // a 0.5 s crossfade (encode.py), so the name changes halfway through the fade.
@@ -90,8 +97,33 @@
     el.style.transform = L.compact ? `translateY(${rise}px)` : `translateY(calc(-50% + ${rise}px))`;
   }
 
+  // Settings: each screenshot shows for SHOT_MS while the step is settled.
+  const SHOT_MS = 2800;
+  let shot = 0, shotTimer = 0;
+  function showShot(i) {
+    shot = (i + shotImgs.length) % shotImgs.length;
+    shotImgs.forEach((img, k) => img.classList.toggle("on", k === shot));
+    shotItems.forEach((li, k) => li.classList.toggle("on", k === shot));
+  }
+  function setShots(opacity, playing) {
+    const el = layers.settings;
+    el.style.opacity = opacity.toFixed(3);
+    if (playing && !shotTimer) {
+      shotTimer = setInterval(() => showShot(shot + 1), SHOT_MS);
+    } else if (!playing && shotTimer) {
+      clearInterval(shotTimer);
+      shotTimer = 0;
+    }
+    if (opacity <= 0.001 && shot !== 0) showShot(0);
+  }
+  shotItems.forEach((li, k) => li.addEventListener("click", () => {
+    showShot(k);
+    if (shotTimer) { clearInterval(shotTimer); shotTimer = setInterval(() => showShot(shot + 1), SHOT_MS); }
+  }));
+
   const played = new Set();
   function setLayer(name, opacity, playing) {
+    if (name === "settings") return setShots(opacity, playing);
     const v = layers[name];
     v.style.opacity = name === "land" ? "" : opacity.toFixed(3);
     if (name === "land") v.style.visibility = opacity <= 0.001 ? "hidden" : "visible";
@@ -111,59 +143,62 @@
   }
 
   // Load the next clips a little before they're needed.
-  function preload(p) {
-    const ahead = { speed: 0.1, trips: 0.28, stats: 0.48, chrono: 0.66 };
+  function preload(u) {
+    const ahead = { speed: 90, trips: 250, stats: 430, chrono: 760 };
     for (const [name, at] of Object.entries(ahead)) {
       const v = layers[name];
-      if (p >= at && v.preload !== "auto") { v.preload = "auto"; v.load(); }
+      if (u >= at && v.preload !== "auto") { v.preload = "auto"; v.load(); }
     }
+    if (u >= 600) shotImgs.forEach((img) => { img.loading = "eager"; });
   }
 
   function update() {
     ticking = false;
     if (!L) layout();
-    const p = progress();
-    const { vw, vh, compact } = L;
+    const u = progress() * SPAN;
+    const a = (x, y) => seg(u, x, y);
+    const { vw, vh } = L;
 
     // Phone
-    const tLand = seg(p, 0.04, 0.12);
-    const tTurn = seg(p, 0.19, 0.26);
+    const tLand = a(36, 108);
+    const tTurn = a(171, 234);
     let st = mix(L.hero, L.land, tLand);
     st = mix(st, L.port, tTurn);
     device.style.transform = `translate(${st.x - vw / 2}px, ${st.y - vh / 2}px) rotate(${st.r}deg) scale(${st.s})`;
-    frame.style.opacity = seg(p, 0.06, 0.12).toFixed(3);
-    const m = seg(p, 0.04, 0.1);
+    frame.style.opacity = a(54, 108).toFixed(3);
+    const m = a(36, 90);
     screen.style.setProperty("--m0", `${lerp(74, 400, m).toFixed(1)}%`);
     screen.style.setProperty("--m1", `${lerp(100, 420, m).toFixed(1)}%`);
-    light.style.opacity = (seg(p, 0.05, 0.13) * (1 - seg(p, 0.92, 1))).toFixed(3);
+    light.style.opacity = (a(45, 117) * (1 - a(1028, 1100))).toFixed(3);
     light.style.setProperty("--lx", `${(st.x / vw) * 100}%`);
-    hint.style.opacity = (1 - seg(p, 0, 0.015)).toFixed(3);
+    hint.style.opacity = (1 - a(0, 13.5)).toFixed(3);
 
     // Screen
-    const a = (x, y) => seg(p, x, y);
     const ops = {
-      land: 1 - a(0.21, 0.25),
-      speed: a(0.21, 0.25) - a(0.38, 0.41),
-      trips: a(0.38, 0.41) - a(0.6, 0.63),
-      stats: a(0.6, 0.63) - a(0.78, 0.81),
-      chrono: a(0.78, 0.81),
+      land: 1 - a(189, 225),
+      speed: a(189, 225) - a(342, 369),
+      trips: a(342, 369) - a(540, 567),
+      stats: a(540, 567) - a(702, 729),
+      settings: a(702, 729) - a(882, 909),
+      chrono: a(882, 909),
     };
     // A clip plays once its step has settled (the hero clip always plays).
-    const settled = { speed: [0.25, 0.4], trips: [0.41, 0.6], stats: [0.63, 0.8], chrono: [0.81, 1.01] };
+    const settled = { speed: [225, 360], trips: [369, 540], stats: [567, 720], settings: [729, 882], chrono: [909, 1111] };
     for (const [name, op] of Object.entries(ops)) {
       const o = clamp(op);
-      const play = name === "land" ? o > 0.001 : o > 0.98 && p >= settled[name][0] && p <= settled[name][1];
+      const play = name === "land" ? o > 0.001 : o > 0.98 && u >= settled[name][0] && u <= settled[name][1];
       setLayer(name, o, play);
     }
-    preload(p);
+    preload(u);
 
     // Text
-    setPanel("hero", 1 - a(0.025, 0.07));
-    setPanel("focus", a(0.1, 0.13) - a(0.18, 0.205));
-    setPanel("speed", a(0.245, 0.27) - a(0.37, 0.395));
-    setPanel("chrono", a(0.8, 0.83));
-    setPanel("trips", a(0.395, 0.42) - a(0.575, 0.6));
-    setPanel("stats", a(0.61, 0.64) - a(0.775, 0.8));
+    setPanel("hero", 1 - a(22.5, 63));
+    setPanel("focus", a(90, 117) - a(162, 184.5));
+    setPanel("speed", a(220.5, 243) - a(333, 355.5));
+    setPanel("trips", a(355.5, 378) - a(517.5, 540));
+    setPanel("stats", a(549, 576) - a(697.5, 720));
+    setPanel("settings", a(711, 738) - a(877.5, 900));
+    setPanel("chrono", a(891, 918));
 
     nav.classList.toggle("solid", window.scrollY > story.offsetTop + story.offsetHeight - vh * 1.05);
   }
@@ -188,6 +223,7 @@
   layout();
   update();
   styleItems[0] && styleItems[0].classList.add("on");
+  showShot(0);
   requestAnimationFrame(tick);
 
   // Placeholder until the App Store link exists.

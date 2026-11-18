@@ -75,7 +75,7 @@ p { margin: 0; }
 }
 
 /* ---------- Story (pinned) ---------- */
-.story { position: relative; height: 1000vh; }
+.story { position: relative; height: 1200vh; }
 .stage {
   position: sticky;
   top: 0;
@@ -133,6 +133,17 @@ p { margin: 0; }
   opacity: 0;
   background: var(--bg);
 }
+/* Settings: screenshots that crossfade (main.js picks the one shown). */
+.layer-shots img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  transition: opacity .6s ease;
+}
+.layer-shots img.on { opacity: 1; }
 .layer-land {
   /* The Focus clip, recorded in the phone's portrait frame; it looks
      right while the whole phone is turned to landscape. */
@@ -160,7 +171,7 @@ p { margin: 0; }
   transform: translateY(-50%);
   will-change: opacity, transform;
 }
-.panel-hero { left: 55%; width: min(520px, 38vw); z-index: 5; opacity: 1; }
+.panel-hero { left: 55%; width: min(560px, 40vw); z-index: 5; opacity: 1; }
 .panel-right { left: 57%; }
 .panel h1 { font-size: clamp(40px, 4.6vw, 72px); font-weight: 800; }
 .panel h2 { font-size: clamp(34px, 3.6vw, 56px); font-weight: 800; margin-bottom: 18px; }
@@ -191,8 +202,8 @@ p { margin: 0; }
   margin: 40px 0 0;
   display: flex;
   flex-wrap: wrap;
-  gap: 6px 18px;
-  font-size: 14px;
+  gap: 6px 13px;
+  font-size: 13.5px;
   font-weight: 500;
   color: var(--text-3);
 }
@@ -212,6 +223,52 @@ p { margin: 0; }
 }
 .styles li.on { color: var(--text); }
 .styles li.on::after { transform: scaleX(1); }
+
+/* Arc Pro: a small accent box beside what it unlocks. */
+.pro {
+  display: inline-block;
+  margin-left: 6px;
+  padding: 2px 5px 1px;
+  border: 1px solid rgba(92, 200, 255, .55);
+  border-radius: 5px;
+  background: rgba(92, 200, 255, .1);
+  color: var(--accent);
+  font-size: 9.5px;
+  font-weight: 700;
+  letter-spacing: .08em;
+  line-height: 1.2;
+  vertical-align: 2px;
+  text-transform: uppercase;
+}
+.eyebrow .pro { margin-left: 8px; vertical-align: 1px; }
+.styles .pro { margin-left: 4px; font-size: 8px; padding: 1px 3px 0; vertical-align: 2px; opacity: .7; transition: opacity .35s; }
+.styles li.on .pro { opacity: 1; }
+.pro-note {
+  margin-top: 22px;
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  font-size: 14.5px !important;
+  color: var(--text-3) !important;
+}
+.pro-note .pro { margin-left: 0; flex: none; }
+
+/* Settings steps: the one on screen is lit; click to show another. */
+.shots { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
+.shots li {
+  display: grid;
+  gap: 2px;
+  padding: 12px 16px;
+  border-radius: 14px;
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: background .35s, border-color .35s;
+}
+.shots b { color: var(--text-3); font-weight: 600; font-size: 17px; transition: color .35s; }
+.shots span { color: var(--text-3); font-size: 15px; line-height: 1.45; transition: color .35s; }
+.shots li.on { background: rgba(255, 255, 255, .04); border-color: var(--line); }
+.shots li.on b { color: var(--text); }
+.shots li.on span { color: var(--text-2); }
 
 .points { list-style: none; margin: 0; padding: 0; display: grid; gap: 18px; }
 .points li { color: var(--text-2); font-size: 17px; padding-left: 18px; position: relative; }
@@ -283,6 +340,11 @@ p { margin: 0; }
 .compact .points { gap: 8px; text-align: left; max-width: 26em; margin: 0 auto; }
 .compact .points li:nth-child(3) { display: none; }
 .compact .facts { display: none; }
+.compact .pro-note { justify-content: center; margin-top: 10px; font-size: 12.5px !important; text-align: left; }
+.compact .shots li:not(.on) { display: none; }
+.compact .shots li { padding: 8px 12px; text-align: left; max-width: 26em; margin: 0 auto; }
+.compact .shots b { font-size: 15px; }
+.compact .shots span { font-size: 13.5px; }
 .compact .disclaimer { margin-top: 12px; text-align: left; font-size: 12.5px !important; }
 .compact .eyebrow { margin-bottom: 6px; font-size: 11px; }
 .compact .scroll-hint { display: none; }
@@ -320,6 +382,40 @@ p { margin: 0; }
 }
 .card h3 { font-size: 20px; margin-bottom: 8px; }
 .card p { color: var(--text-2); font-size: 15.5px; }
+
+.pro-section { padding: 40px 0 60px; }
+.features, .pro-section, .faq { scroll-margin-top: calc(var(--nav-h) - 20px); }
+.tiers {
+  margin-top: 48px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+@media (max-width: 760px) { .tiers { grid-template-columns: 1fr; } }
+.tier {
+  padding: 30px 28px 32px;
+  border-radius: 22px;
+  background: linear-gradient(180deg, #0f141a, #0a0d12);
+  border: 1px solid var(--line);
+}
+.tier-pro {
+  border-color: rgba(92, 200, 255, .35);
+  background: linear-gradient(180deg, rgba(92, 200, 255, .09), rgba(92, 200, 255, .02) 60%), #0a0d12;
+}
+.tier h3 { font-size: 22px; margin-bottom: 18px; display: flex; align-items: center; }
+.tier ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 12px; }
+.tier li { color: var(--text-2); font-size: 16px; padding-left: 26px; position: relative; }
+.tier li::before {
+  content: "";
+  position: absolute;
+  left: 2px;
+  top: .38em;
+  width: 11px;
+  height: 6px;
+  border-left: 2px solid var(--accent);
+  border-bottom: 2px solid var(--accent);
+  transform: rotate(-45deg);
+}
 
 .faq { padding: 80px 0 120px; }
 .faq .section-title { margin-bottom: 36px; }
