@@ -1,0 +1,3 @@
+.DS_Store
+# Source data that must never be published (e.g. the full, uncropped trip GPX).
+arc/assets/
