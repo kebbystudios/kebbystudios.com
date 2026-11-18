@@ -24,9 +24,10 @@
   // less one screen).
   const SPAN = 1100;
 
-  // Hero clip: Glow, Arc, Donut, Segment, Particle, Sport, Halo; 2 s each plus
-  // a 0.5 s crossfade (encode.py), so the name changes halfway through the fade.
-  const SLOT = 2.5, STYLES = 7;
+  // Hero clip: Arc, Classic, Glow, Donut, Segment, Particle, Sport, Halo; 2 s
+  // each plus a 0.5 s crossfade (encode.py), so the name changes halfway
+  // through the fade.
+  const SLOT = 2.5, STYLES = 8;
 
   const clamp = (x, a = 0, b = 1) => Math.min(b, Math.max(a, x));
   const smooth = (t) => t * t * (3 - 2 * t);

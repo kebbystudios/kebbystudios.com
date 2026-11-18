@@ -200,14 +200,16 @@ p { margin: 0; }
   list-style: none;
   padding: 0;
   margin: 40px 0 0;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px 13px;
+  /* Two even rows of four. */
+  display: grid;
+  grid-template-columns: repeat(4, max-content);
+  justify-items: start;
+  gap: 10px 20px;
   font-size: 13.5px;
   font-weight: 500;
   color: var(--text-3);
 }
-.styles li { position: relative; transition: color .35s; }
+.styles li { position: relative; display: flex; align-items: center; transition: color .35s; }
 .styles li::after {
   content: "";
   position: absolute;
@@ -224,34 +226,36 @@ p { margin: 0; }
 .styles li.on { color: var(--text); }
 .styles li.on::after { transform: scaleX(1); }
 
-/* Arc Pro: a small accent box beside what it unlocks. */
+/* Arc Pro: a small accent box beside what it unlocks. Same size everywhere;
+   its parent centers it on the text beside it (flex, not the baseline). */
 .pro {
-  display: inline-block;
-  margin-left: 6px;
-  padding: 2px 5px 1px;
+  display: inline-flex;
+  align-items: center;
+  flex: none;
+  margin-left: 5px;
+  padding: 2px 3.5px;
   border: 1px solid rgba(92, 200, 255, .55);
-  border-radius: 5px;
+  border-radius: 4px;
   background: rgba(92, 200, 255, .1);
   color: var(--accent);
-  font-size: 9.5px;
+  font-size: 8px;
   font-weight: 700;
   letter-spacing: .08em;
-  line-height: 1.2;
-  vertical-align: 2px;
+  line-height: 1;
   text-transform: uppercase;
 }
-.eyebrow .pro { margin-left: 8px; vertical-align: 1px; }
-.styles .pro { margin-left: 4px; font-size: 8px; padding: 1px 3px 0; vertical-align: 2px; opacity: .7; transition: opacity .35s; }
+.with-pro { display: flex; align-items: center; }
+.styles .pro { opacity: .7; transition: opacity .35s; }
 .styles li.on .pro { opacity: 1; }
 .pro-note {
   margin-top: 22px;
   display: flex;
-  align-items: baseline;
-  gap: 10px;
+  align-items: center;
+  gap: 8px;
   font-size: 14.5px !important;
   color: var(--text-3) !important;
 }
-.pro-note .pro { margin-left: 0; flex: none; }
+.pro-note .pro { margin-left: 0; }
 
 /* Settings steps: the one on screen is lit; click to show another. */
 .shots { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
@@ -264,11 +268,11 @@ p { margin: 0; }
   cursor: pointer;
   transition: background .35s, border-color .35s;
 }
-.shots b { color: var(--text-3); font-weight: 600; font-size: 17px; transition: color .35s; }
-.shots span { color: var(--text-3); font-size: 15px; line-height: 1.45; transition: color .35s; }
+.shots b { display: flex; align-items: center; color: var(--text-3); font-weight: 600; font-size: 17px; transition: color .35s; }
+.shots li > span { color: var(--text-3); font-size: 15px; line-height: 1.45; transition: color .35s; }
 .shots li.on { background: rgba(255, 255, 255, .04); border-color: var(--line); }
 .shots li.on b { color: var(--text); }
-.shots li.on span { color: var(--text-2); }
+.shots li.on > span { color: var(--text-2); }
 
 .points { list-style: none; margin: 0; padding: 0; display: grid; gap: 18px; }
 .points li { color: var(--text-2); font-size: 17px; padding-left: 18px; position: relative; }
@@ -336,15 +340,16 @@ p { margin: 0; }
 .compact .panel p, .compact .points li { font-size: 15px; }
 .compact .lede { margin: 12px auto 0; }
 .compact .cta-row { margin-top: 18px; }
-.compact .styles { justify-content: center; margin-top: 22px; gap: 4px 12px; font-size: 13px; }
+.compact .styles { justify-content: center; margin-top: 22px; gap: 8px 12px; font-size: 13px; }
 .compact .points { gap: 8px; text-align: left; max-width: 26em; margin: 0 auto; }
 .compact .points li:nth-child(3) { display: none; }
 .compact .facts { display: none; }
 .compact .pro-note { justify-content: center; margin-top: 10px; font-size: 12.5px !important; text-align: left; }
+.compact .with-pro { justify-content: center; }
 .compact .shots li:not(.on) { display: none; }
 .compact .shots li { padding: 8px 12px; text-align: left; max-width: 26em; margin: 0 auto; }
 .compact .shots b { font-size: 15px; }
-.compact .shots span { font-size: 13.5px; }
+.compact .shots li > span { font-size: 13.5px; }
 .compact .disclaimer { margin-top: 12px; text-align: left; font-size: 12.5px !important; }
 .compact .eyebrow { margin-bottom: 6px; font-size: 11px; }
 .compact .scroll-hint { display: none; }
