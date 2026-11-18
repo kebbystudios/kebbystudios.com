@@ -17,9 +17,9 @@
   const layers = Object.fromEntries([...stage.querySelectorAll("[data-layer]")].map((el) => [el.dataset.layer, el]));
   const styleItems = [...stage.querySelectorAll(".styles li")];
 
-  // Hero clip: Glow, Arc, Donut, Segment, Particle, Halo; 2 s each plus a
-  // 0.5 s crossfade (encode.py), so the name changes halfway through the fade.
-  const SLOT = 2.5, STYLES = 6;
+  // Hero clip: Glow, Arc, Donut, Segment, Particle, Sport, Halo; 2 s each plus
+  // a 0.5 s crossfade (encode.py), so the name changes halfway through the fade.
+  const SLOT = 2.5, STYLES = 7;
 
   const clamp = (x, a = 0, b = 1) => Math.min(b, Math.max(a, x));
   const smooth = (t) => t * t * (3 - 2 * t);
