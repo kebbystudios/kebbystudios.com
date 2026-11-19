@@ -122,7 +122,7 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
 }
 .card-media {
   position: absolute;
-  inset: -3%;
+  inset: -4%;
   transform: translate3d(var(--px, 0px), var(--py, 0px), 0);
   will-change: transform;
 }
@@ -276,17 +276,6 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
 }
 .dial-kind { color: var(--text-2); font-size: 12.5px; height: 18px; transition: opacity .3s; }
 
-.count {
-  position: fixed;
-  left: var(--pad);
-  bottom: calc(var(--pad) + env(safe-area-inset-bottom));
-  z-index: 30;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  color: var(--text-2);
-}
-.count-sep { width: 28px; height: 1px; background: var(--text-3); }
 .hint {
   position: fixed;
   right: var(--pad);
@@ -298,8 +287,8 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
 .hint.gone { opacity: 0; }
 
 /* Everything but the opening card steps back during the handoff. */
-.top, .dial, .count, .hint:not(.gone), .ambient { transition: opacity .45s; }
-.opening .top, .opening .dial, .opening .count, .opening .hint, .opening .ambient { opacity: 0; }
+.top, .dial, .hint:not(.gone), .ambient { transition: opacity .45s; }
+.opening .top, .opening .dial, .opening .hint, .opening .ambient { opacity: 0; }
 
 /* ---------- Cursor (mouse and trackpad only) ---------- */
 .cursor { display: none; }
@@ -312,9 +301,9 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
     z-index: 60;
     display: grid;
     place-items: center;
-    width: 64px;
-    height: 64px;
-    margin: -32px 0 0 -32px;
+    width: 32px;
+    height: 32px;
+    margin: -16px 0 0 -16px;
     pointer-events: none;
     opacity: 0;
     transition: opacity .3s;
@@ -326,23 +315,11 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
     inset: 0;
     border-radius: 50%;
     background: var(--text);
-    transform: scale(.125);
+    transform: scale(.25);
     transition: transform .45s var(--ease), background .45s;
-  }
-  .cursor-label {
-    position: relative;
-    color: var(--bg);
-    font: 500 11px/1 var(--mono);
-    letter-spacing: .04em;
-    text-transform: uppercase;
-    opacity: 0;
-    transform: scale(.6);
-    transition: opacity .3s, transform .45s var(--ease);
   }
   .cursor.big::before { transform: scale(1); }
   .cursor.mid::before { transform: scale(.7); background: rgba(238, 240, 242, .9); }
-  .cursor.big .cursor-label, .cursor.mid .cursor-label { opacity: 1; transform: none; }
-  .cursor.mid .cursor-label { font-size: 15px; }
 }
 
 /* ---------- About ---------- */
@@ -389,7 +366,7 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
 
 /* ---------- Small screens ---------- */
 @media (max-width: 700px) {
-  .hint, .count { display: none; }
+  .hint { display: none; }
   .soon-copy, .studio-copy { max-width: 70%; gap: 6px; }
   .soon-orbit { left: 76%; top: 38%; }
 }

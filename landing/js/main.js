@@ -1,7 +1,7 @@
 // Kebby Studios — the carousel.
 //
 // One continuous position (`pos`, in cards) drives everything: where each card
-// sits and how large it is, the dial's ticks, the name, and the counter. Wheel,
+// sits and how large it is, the dial's ticks, and the name. Wheel,
 // trackpad, drag, swipe, and the arrow keys move a target; `pos` eases toward
 // it and settles on a whole card.
 //
@@ -19,11 +19,8 @@
   const rollEl = document.getElementById("roll");
   const kindEl = document.getElementById("kind");
   const ticksEl = document.getElementById("ticks");
-  const countI = document.getElementById("count-i");
-  const countN = document.getElementById("count-n");
   const hint = document.querySelector(".hint");
   const cursor = document.querySelector(".cursor");
-  const cursorLabel = cursor.querySelector(".cursor-label");
   const aboutBtn = document.querySelector(".about-btn");
   const about = document.getElementById("about");
   const ambL = document.querySelector(".amb-l");
@@ -66,7 +63,6 @@
     d: 0,
   }));
   const N = slots.length;
-  countN.textContent = String(UNIQUE).padStart(2, "0");
 
   // ---------- Layout ----------
   let vw = 0, vh = 0, cw = 0, ch = 0, X1 = 0, X2 = 0, narrow = false;
@@ -214,7 +210,6 @@
       rollEl.appendChild(span);
     }
     kindEl.textContent = li.dataset.kind;
-    countI.textContent = String(u + 1).padStart(2, "0");
   }
 
   // ---------- Frame ----------
@@ -245,7 +240,7 @@
       s.hover = lerp(s.hover, s.hoverTo, 1 - Math.exp(-dt * 10));
       s.px = lerp(s.px, s.pxTo, 1 - Math.exp(-dt * 6));
       s.py = lerp(s.py, s.pyTo, 1 - Math.exp(-dt * 6));
-      const zoom = 1 + s.hover * (p.ad < 0.5 ? 0.018 : 0.045);
+      const zoom = 1 + s.hover * (p.ad < 0.5 ? 0.036 : 0.09);
       let x = p.x + sway * (1 - Math.min(p.ad, 1) * 0.4);
       let op = p.ad > 2.4 ? 0 : 1;
       // Intro: cards rise in from the right, nearest first.
@@ -300,7 +295,7 @@
     delta = clamp(delta, -140, 140);
     if (gestureBase === null) gestureBase = Math.round(target);
     // Up and left go back; down and right go on.
-    target += delta / 420;
+    target += delta / 840;
     nudged();
     clearTimeout(snapTimer);
     snapTimer = setTimeout(snap, 140);
@@ -309,6 +304,7 @@
   // ---------- Input: drag and swipe ----------
   let down = null;
   let moved = false;
+  let pressedSettled = false;
   stage.addEventListener("pointerdown", (e) => {
     if (opening || e.button !== 0) return;
     down = { x: e.clientX, y: e.clientY, t: target, axis: null, hist: [[e.clientX, e.clientY, performance.now()]] };
@@ -358,7 +354,9 @@
     if (s.href && (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button === 1)) return;
     e.preventDefault();
     const d = wrap(s.k - pos);
-    if (Math.abs(d) > 0.5) { target = Math.round(pos + d); nudged(); return; }
+    // Mouse and touch clicks carry a count in e.detail; Enter on a focused link doesn't.
+    const settled = e.detail ? pressedSettled && e.detail === 1 : Math.abs(d) < 0.5;
+    if (!settled) { target = Math.round(pos + d); nudged(); return; }
     activate(s);
   });
 
@@ -412,23 +410,15 @@
         const nx = (pointer.x - r.left) / r.width - 0.5;
         const ny = (pointer.y - r.top) / r.height - 0.5;
         // The picture drifts against the cursor, like looking through a window.
-        s.pxTo = -nx * 14; s.pyTo = -ny * 10;
+        // Capped so the oversized picture never shows its edge on a small card.
+        const w = s.el.offsetWidth, hh = s.el.offsetHeight;
+        s.pxTo = -nx * Math.min(28, w * 0.075); s.pyTo = -ny * Math.min(20, hh * 0.075);
       } else { s.pxTo = 0; s.pyTo = 0; }
     }
-    let cls = "", label = "";
-    if (hit) {
-      const d = wrap(hit.k - pos);
-      if (Math.abs(d) < 0.5) {
-        cls = "big";
-        label = hit.href ? "Open" : hit.id === "studio" ? "About" : "Soon";
-      } else {
-        cls = "mid";
-        label = d < 0 ? "←" : "→";
-      }
-    }
+    // A plain circle: full over the centered card, smaller over the neighbors.
+    const cls = hit ? (Math.abs(wrap(hit.k - pos)) < 0.5 ? "big" : "mid") : "";
     cursor.classList.toggle("big", cls === "big");
     cursor.classList.toggle("mid", cls === "mid");
-    if (label) cursorLabel.textContent = label;
     cursor.classList.toggle("on", pointer.inside && !opening && !body.classList.contains("about-open"));
   }
   function updateCursor() {
@@ -467,7 +457,10 @@
   stage.addEventListener("pointerdown", (e) => {
     const li = e.target.closest(".card");
     const s = li && slots.find((x) => x.el === li);
-    if (s && s.href && Math.abs(wrap(s.k - pos)) < 0.5) prepare(s.href);
+    // Only a card that was already centered and at rest when pressed opens;
+    // a press on a neighbor (or on one still sliding in) just centers it.
+    pressedSettled = !!s && Math.abs(wrap(s.k - pos)) < 0.5 && Math.abs(target - pos) < 0.08;
+    if (s && s.href && pressedSettled) prepare(s.href);
   });
   function heroOf(h) {
     try { return h.frame.contentDocument.querySelector("video[data-layer='land']"); } catch (e) { return null; }
