@@ -1,6 +1,9 @@
 /* Arc — kebbystudios.com/arc
    Dark, moody, one accent (Glacier). The screen background in the clips is
    #05070a (SpeedBackground, dark), so the page uses the same black. */
+/* Arriving from kebbystudios.com, the zoomed card and this page are the same
+   picture; the browser crossfades between them instead of cutting. */
+@view-transition { navigation: auto; }
 :root {
   --bg: #05070a;
   --bg-raised: #0c1015;

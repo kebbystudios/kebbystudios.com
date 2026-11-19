@@ -227,6 +227,22 @@
   showShot(0);
   requestAnimationFrame(tick);
 
+  // Opened from the Kebby Studios carousel: its zoom ended on this page (in an
+  // iframe), with the hero clip at some time. Pick the clip up from there.
+  try {
+    const raw = window.top === window && sessionStorage.getItem("kebby-handoff");
+    if (raw) {
+      sessionStorage.removeItem("kebby-handoff");
+      const h = JSON.parse(raw);
+      const age = (Date.now() - h.at) / 1000;
+      if (age >= 0 && age < 5 && typeof h.t === "number") {
+        const v = layers.land;
+        const seek = () => { try { v.currentTime = (h.t + age) % (v.duration || 40); } catch (e) {} };
+        if (v.readyState >= 1) seek(); else v.addEventListener("loadedmetadata", seek, { once: true });
+      }
+    }
+  } catch (e) {}
+
   // Placeholder until the App Store link exists.
   const APP_STORE_URL = "";
   document.querySelectorAll("[data-app-store]").forEach((a) => {

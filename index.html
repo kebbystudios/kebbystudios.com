@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Kebby Studios</title>
+  <meta name="description" content="Kebby Studios is an independent studio making apps for iPhone and Apple Watch. Our first app is Arc, a speedometer and trip logger.">
+  <meta name="theme-color" content="#060708">
+  <meta property="og:title" content="Kebby Studios">
+  <meta property="og:description" content="Independent apps for iPhone and Apple Watch.">
+  <meta property="og:url" content="https://kebbystudios.com/">
+  <link rel="icon" href="landing/img/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="landing/css/style.css">
+  <script>document.documentElement.classList.add("js");</script>
+</head>
+<body>
+  <!-- Ambient light: the colors at the edges of the centered card spill onto the page. -->
+  <div class="ambient" aria-hidden="true"><i class="amb-l"></i><i class="amb-r"></i></div>
+
+  <header class="top">
+    <a class="studio" href="./">
+      <span class="studio-name">Kebby Studios</span>
+      <span class="studio-sub">Independent apps for iPhone</span>
+    </a>
+    <button class="about-btn" type="button" aria-expanded="false" aria-controls="about">About</button>
+  </header>
+
+  <main class="stage" id="stage">
+    <h1 class="sr-only">Kebby Studios apps</h1>
+    <!-- Cards are links, so everything works without JavaScript; main.js turns
+         the list into the carousel and repeats it to fill the loop. -->
+    <ul class="track" id="track" aria-label="Apps">
+      <li class="card" data-id="arc" data-name="Arc" data-kind="Speedometer &amp; Trip Logger" data-href="arc/">
+        <a class="card-link" href="arc/" aria-label="Arc, speedometer and trip logger">
+          <div class="card-media">
+            <video class="card-video" muted loop playsinline preload="metadata" poster="landing/media/arc.jpg"
+                   data-src="landing/media/arc.mp4" data-src-sm="landing/media/arc-sm.mp4"
+                   data-src-tall="landing/media/arc-tall.mp4" data-poster-tall="landing/media/arc-tall.jpg"></video>
+          </div>
+        </a>
+      </li>
+      <li class="card card-soon" data-id="soon" data-name="Next" data-kind="In the workshop">
+        <a class="card-link" href="#soon" aria-label="Our next app, in the workshop">
+          <div class="card-media soon">
+            <div class="soon-grid"></div>
+            <div class="soon-orbit"><i></i><i></i><i></i></div>
+            <div class="soon-copy">
+              <span class="mono">No. 002</span>
+              <strong>Something new is in&nbsp;the&nbsp;workshop.</strong>
+            </div>
+          </div>
+        </a>
+      </li>
+      <li class="card card-studio" data-id="studio" data-name="Studio" data-kind="About Kebby Studios">
+        <a class="card-link" href="#about" aria-label="About Kebby Studios">
+          <div class="card-media studio-card">
+            <div class="studio-lines" aria-hidden="true"></div>
+            <div class="studio-copy">
+              <span class="mono">Kebby Studios</span>
+              <strong>Small apps, made with&nbsp;care.</strong>
+            </div>
+          </div>
+        </a>
+      </li>
+    </ul>
+  </main>
+
+  <!-- The dial: ticks travel with the carousel; the name rolls like an odometer. -->
+  <footer class="dial" aria-live="polite">
+    <div class="dial-ruler" aria-hidden="true"><div class="dial-ticks" id="ticks"></div><span class="dial-needle"></span></div>
+    <div class="dial-name"><span class="dial-roll" id="roll"></span></div>
+    <div class="dial-kind" id="kind"></div>
+  </footer>
+  <div class="count mono" aria-hidden="true"><span id="count-i">01</span><span class="count-sep"></span><span id="count-n">03</span></div>
+  <div class="hint mono" aria-hidden="true">Scroll or drag</div>
+
+  <div class="cursor" aria-hidden="true"><span class="cursor-label"></span></div>
+
+  <section class="about" id="about" aria-hidden="true" aria-labelledby="about-title">
+    <div class="about-inner">
+      <p class="mono about-eyebrow">About</p>
+      <h2 id="about-title">Kebby Studios makes small, careful apps for iPhone and Apple&nbsp;Watch.</h2>
+      <p>Each app does one thing well and looks good doing it. Arc, a speedometer and trip logger, is the first. More are on the way.</p>
+      <ul class="about-links">
+        <li><a href="arc/">Arc<span class="mono">Speedometer &amp; Trip Logger</span></a></li>
+        <li><a href="mailto:kebbystudios@gmail.com">Contact<span class="mono">kebbystudios@gmail.com</span></a></li>
+      </ul>
+      <p class="about-legal">&copy; 2026 Kebby Studios</p>
+    </div>
+  </section>
+
+  <script src="landing/js/main.js"></script>
+</body>
+</html>
