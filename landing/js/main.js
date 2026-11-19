@@ -33,6 +33,7 @@
   const AMBIENT = {
     arc: ["#0f2a3c", "#0b2233", "#5cc8ff"],
     soon: ["#1e1834", "#2a2150", "#b9a8ff"],
+    studypass: ["#3a1f2e", "#221a55", "#c3b4ff"],
     studio: ["#2c1f14", "#21170f", "#f0b37e"],
   };
 
