@@ -1,0 +1,498 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>StudyPass: Study to Unlock Your Apps</title>
+  <meta name="description" content="StudyPass lets you use your favorite apps for a while, then locks them until you've studied. Built on Apple's Screen Time. No account, no ads, no tracking.">
+  <meta name="theme-color" content="#faf8f6">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="StudyPass: Study to unlock your apps">
+  <meta property="og:description" content="Earn your screen time by studying. Free for a month. No account, no tracking.">
+  <meta property="og:image" content="https://kebbystudios.com/studypass/img/og.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:url" content="https://kebbystudios.com/studypass/">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" href="img/icon-64.png">
+  <link rel="apple-touch-icon" href="img/icon-180.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <script>
+    document.documentElement.classList.add("js");
+    if (!matchMedia("(prefers-reduced-motion: reduce)").matches) document.documentElement.classList.add("story");
+  </script>
+</head>
+<body>
+
+<!-- Icons. SF Symbols-like shapes drawn for this page. -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <symbol id="i-lock" viewBox="0 0 24 24"><path fill="currentColor" d="M7 10V7.5a5 5 0 0 1 10 0V10h.5A2.5 2.5 0 0 1 20 12.5v7a2.5 2.5 0 0 1-2.5 2.5h-11A2.5 2.5 0 0 1 4 19.5v-7A2.5 2.5 0 0 1 6.5 10H7zm2 0h6V7.5a3 3 0 0 0-6 0V10z"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path fill="currentColor" d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zm-1.2 14.4-4.1-4.1 1.5-1.5 2.6 2.6 5.5-5.5 1.5 1.5z"/></symbol>
+  <symbol id="i-moon" viewBox="0 0 24 24"><path fill="currentColor" d="M10.6 4.4a8 8 0 1 0 9.1 9.3A6.6 6.6 0 0 1 10.6 4.4z"/><path fill="currentColor" d="m17 2 .8 2.2L20 5l-2.2.8L17 8l-.8-2.2L14 5l2.2-.8zM20.6 8.6l.5 1.3 1.3.5-1.3.5-.5 1.3-.5-1.3-1.3-.5 1.3-.5z"/></symbol>
+  <symbol id="i-bolt" viewBox="0 0 24 24"><path fill="currentColor" d="M13.6 2 4.6 13.6h6.2L9.6 22l9.2-11.8h-6.3z"/></symbol>
+  <symbol id="i-pause" viewBox="0 0 24 24"><rect fill="currentColor" x="5.5" y="4" width="4.5" height="16" rx="1.3"/><rect fill="currentColor" x="14" y="4" width="4.5" height="16" rx="1.3"/></symbol>
+  <symbol id="i-repeat" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M4 11V9.5A3.5 3.5 0 0 1 7.5 6H19m-3-3 3 3-3 3M20 13v1.5a3.5 3.5 0 0 1-3.5 3.5H5m3 3-3-3 3-3"/></symbol>
+  <symbol id="i-book" viewBox="0 0 24 24"><path fill="currentColor" d="M2 5.6c2.6-1.3 6.1-1.3 9 .5v14c-2.9-1.6-6.4-1.6-9-.4zM22 5.6c-2.6-1.3-6.1-1.3-9 .5v14c2.9-1.6 6.4-1.6 9-.4z"/></symbol>
+  <symbol id="i-cap" viewBox="0 0 24 24"><path fill="currentColor" d="M12 3 1 8.6l11 5.6 9-4.6V16h2V8.6z"/><path fill="currentColor" d="M5 12.4V16c0 1.9 3.1 3.6 7 3.6s7-1.7 7-3.6v-3.6l-7 3.6z"/></symbol>
+  <symbol id="i-house" viewBox="0 0 24 24"><path fill="currentColor" d="M12 2.8 2.4 11H5v9.2h5.2V14h3.6v6.2H19V11h2.6z"/></symbol>
+  <symbol id="i-gear" viewBox="0 0 24 24"><path fill="currentColor" fill-rule="evenodd" d="M10.3 2h3.4l.5 2.6 1.9.8 2.2-1.5 2.4 2.4-1.5 2.2.8 1.9 2.6.5v3.4l-2.6.5-.8 1.9 1.5 2.2-2.4 2.4-2.2-1.5-1.9.8-.5 2.6h-3.4l-.5-2.6-1.9-.8-2.2 1.5-2.4-2.4 1.5-2.2-.8-1.9L2 13.7v-3.4l2.6-.5.8-1.9-1.5-2.2 2.4-2.4 2.2 1.5 1.9-.8zM12 8.4a3.6 3.6 0 1 0 0 7.2 3.6 3.6 0 0 0 0-7.2z"/></symbol>
+  <symbol id="i-chev" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" d="m9 5 7 7-7 7"/></symbol>
+  <symbol id="i-back" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" d="M9 14 4 9l5-5M4 9h10.5a5.5 5.5 0 0 1 0 11H11"/></symbol>
+  <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2"/><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" d="M12 7v5l3.5 2"/></symbol>
+  <symbol id="i-cal" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="3" fill="none" stroke="currentColor" stroke-width="2"/><path stroke="currentColor" stroke-width="2" stroke-linecap="round" d="M8 3v4M16 3v4M3 10h18"/><circle cx="8" cy="14.5" r="1.3" fill="currentColor"/><circle cx="12" cy="14.5" r="1.3" fill="currentColor"/></symbol>
+  <symbol id="i-bell" viewBox="0 0 24 24"><path fill="currentColor" d="M12 2.5a6 6 0 0 0-6 6v4.2L4.3 16a1 1 0 0 0 .9 1.5h13.6a1 1 0 0 0 .9-1.5L18 12.7V8.5a6 6 0 0 0-6-6zM9.5 19a2.5 2.5 0 0 0 5 0z"/></symbol>
+  <symbol id="i-text" viewBox="0 0 24 24"><path fill="currentColor" d="M5 3h14a3 3 0 0 1 3 3v9a3 3 0 0 1-3 3h-6l-5 4v-4H5a3 3 0 0 1-3-3V6a3 3 0 0 1 3-3z"/><path style="stroke:var(--cut,#fff)" stroke-width="1.8" stroke-linecap="round" d="M7 8.5h10M7 12.5h6"/></symbol>
+  <symbol id="i-grid" viewBox="0 0 24 24"><rect fill="currentColor" x="3" y="3" width="8" height="8" rx="2.2"/><rect fill="currentColor" x="13" y="3" width="8" height="8" rx="2.2"/><rect fill="currentColor" x="3" y="13" width="8" height="8" rx="2.2"/><rect fill="currentColor" x="13" y="13" width="8" height="8" rx="4"/></symbol>
+  <symbol id="i-key" viewBox="0 0 24 24"><circle cx="5.5" cy="12" r="2" fill="currentColor"/><circle cx="12" cy="12" r="2" fill="currentColor"/><circle cx="18.5" cy="12" r="2" fill="currentColor"/><rect x="1" y="6" width="22" height="12" rx="6" fill="none" stroke="currentColor" stroke-width="1.8"/></symbol>
+  <symbol id="i-family" viewBox="0 0 24 24"><circle cx="8" cy="8.2" r="3.4" fill="currentColor"/><path fill="currentColor" d="M2.2 20v-1.4a5.8 5.8 0 0 1 11.6 0V20z"/><circle cx="18" cy="12" r="2.4" fill="currentColor"/><path fill="currentColor" d="M14.2 20v-.8a3.8 3.8 0 0 1 7.6 0v.8z"/></symbol>
+  <symbol id="i-stack" viewBox="0 0 24 24"><path fill="currentColor" d="M12 2 2 7l10 5 10-5z"/><path fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" d="m2 12 10 5 10-5M2 17l10 5 10-5"/></symbol>
+  <symbol id="i-plus1" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="currentColor"/><path style="stroke:var(--cut,#fff)" stroke-width="2" stroke-linecap="round" d="M6 12h6M9 9v6M15.5 9.5l1.5-1v7"/></symbol>
+  <symbol id="i-alert" viewBox="0 0 24 24"><path fill="currentColor" d="M10.3 3.2a2 2 0 0 1 3.4 0l8.6 15A2 2 0 0 1 20.6 21H3.4a2 2 0 0 1-1.7-2.8z"/><path style="stroke:var(--cut,#fff)" stroke-width="2.2" stroke-linecap="round" d="M12 9v4.6"/><circle cx="12" cy="17.2" r="1.3" style="fill:var(--cut,#fff)"/></symbol>
+  <symbol id="i-trash" viewBox="0 0 24 24"><path fill="currentColor" d="M9 2h6l1 2h4v2H4V4h4zM5.5 8h13l-1 12.2A2 2 0 0 1 15.5 22h-7a2 2 0 0 1-2-1.8z"/><path style="stroke:var(--cut,#fff)" stroke-width="1.8" stroke-linecap="round" d="M5 7l14 13"/></symbol>
+  <symbol id="i-clockcheck" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8.5" fill="currentColor"/><path style="stroke:var(--cut,#fff)" stroke-width="1.8" stroke-linecap="round" d="M11 6.5V11H7.5"/><circle cx="17.5" cy="17.5" r="5" style="fill:var(--cut,#fff)"/><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" d="m15.4 17.6 1.5 1.5 2.8-3"/></symbol>
+  <symbol id="i-shield" viewBox="0 0 24 24"><path fill="currentColor" d="M12 2 4 5v6.5c0 5 3.4 9 8 10.5 4.6-1.5 8-5.5 8-10.5V5z"/><rect x="9" y="10.6" width="6" height="5" rx="1.2" style="fill:var(--cut,#fff)"/><path fill="none" style="stroke:var(--cut,#fff)" stroke-width="1.6" d="M10.3 10.8V9.6a1.7 1.7 0 0 1 3.4 0v1.2"/></symbol>
+  <symbol id="i-eye" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2" d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3" fill="currentColor"/><path stroke="currentColor" stroke-width="2" stroke-linecap="round" d="M4 20 20 4"/></symbol>
+  <symbol id="i-arrow" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M5 12h14m-6-6 6 6-6 6"/></symbol>
+  <symbol id="i-down" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M12 5v14m-6-6 6 6 6-6"/></symbol>
+  <symbol id="i-apple" viewBox="0 0 24 24"><path fill="currentColor" d="M16.4 12.6c0-2.3 1.9-3.4 2-3.5-1.1-1.6-2.8-1.8-3.4-1.8-1.4-.2-2.8.8-3.5.8-.7 0-1.9-.8-3.1-.8-1.6 0-3 .9-3.8 2.3-1.6 2.8-.4 7 1.2 9.2.8 1.1 1.7 2.3 2.9 2.3 1.2 0 1.6-.7 3-.7s1.8.7 3 .7c1.3 0 2.1-1.1 2.8-2.2.9-1.3 1.3-2.5 1.3-2.6-.1 0-2.4-.9-2.4-3.7zM14.2 5.8c.6-.8 1.1-1.8 1-2.8-.9 0-2 .6-2.7 1.4-.6.7-1.1 1.7-1 2.7 1 .1 2-.5 2.7-1.3z"/></symbol>
+  <symbol id="i-signal" viewBox="0 0 18.4 12"><rect x="0" y="7.6" width="3.4" height="4.4" rx="1" fill="currentColor"/><rect x="5" y="5" width="3.4" height="7" rx="1" fill="currentColor"/><rect x="10" y="2.5" width="3.4" height="9.5" rx="1" fill="currentColor"/><rect x="15" y="0" width="3.4" height="12" rx="1" fill="currentColor"/></symbol>
+  <symbol id="i-wifi" viewBox="0 0 16 12"><path fill="currentColor" d="M8 2.2c2.4 0 4.6.9 6.3 2.5l1.3-1.4A10.9 10.9 0 0 0 8 .2 10.9 10.9 0 0 0 .4 3.3l1.3 1.4A9 9 0 0 1 8 2.2zm0 3.5c1.4 0 2.8.6 3.8 1.5l1.3-1.4A7.4 7.4 0 0 0 8 3.7 7.4 7.4 0 0 0 2.9 5.8l1.3 1.4c1-.9 2.4-1.5 3.8-1.5zm0 3.4c.6 0 1.2.2 1.6.6L8 11.5 6.4 9.7c.4-.4 1-.6 1.6-.6z"/></symbol>
+  <symbol id="i-batt" viewBox="0 0 28 13"><rect x=".6" y=".6" width="23.6" height="11.8" rx="3.6" fill="none" stroke="currentColor" stroke-opacity=".4" stroke-width="1.2"/><rect x="2.4" y="2.4" width="20" height="8.2" rx="2.2" fill="currentColor"/><path d="M25.8 4.4v4.2c.9-.3 1.4-1.1 1.4-2.1s-.5-1.8-1.4-2.1z" fill="currentColor" fill-opacity=".4"/></symbol>
+</svg>
+
+<!-- One phone, every screen. main.js copies it into each [data-phone] and shows one screen at a time. -->
+<template id="phone-tpl">
+  <div class="phone-body">
+    <div class="screen">
+      <div class="status"><time>9:41</time><span class="sb"><svg class="sb-sig"><use href="#i-signal"/></svg><svg class="sb-wifi"><use href="#i-wifi"/></svg><svg class="sb-bat"><use href="#i-batt"/></svg></span></div>
+      <i class="island"></i>
+
+      <!-- Home: Free Time -->
+      <div class="scr scr-home scr-free" data-s="free">
+        <p class="ttl">StudyPass</p>
+        <div class="ring-card" style="--k:#34c759;--k2:#6fe08c;--track:#e2f6e7">
+          <p class="ring-label"><svg><use href="#i-check"/></svg><span>Free Time</span></p>
+          <div class="ring"><svg viewBox="0 0 100 100"><defs><linearGradient id="gF__N__" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#6fe08c"/><stop offset="1" stop-color="#2fbf55"/></linearGradient></defs><circle class="ring-track" cx="50" cy="50" r="44"/><circle class="ring-arc" cx="50" cy="50" r="44" stroke="url(#gF__N__)"/></svg>
+            <div class="ring-num"><b data-num>9</b><span>min of app time left</span></div></div>
+          <p class="ring-note">Then your apps lock until you study 10&nbsp;min.</p>
+          <p class="ring-sess"><svg><use href="#i-repeat"/></svg><span data-sess>1 of 3 study sessions done today</span></p>
+        </div>
+        <div class="btn-main btn-gray"><svg><use href="#i-pause"/></svg><span>Pause</span></div>
+        <div class="rows"><div class="row"><span class="tile" style="background:linear-gradient(#ffb340,#ff8a00)"><svg><use href="#i-bolt"/></svg></span><span class="row-t">Overrides Left Today</span><span class="row-v">1</span></div></div>
+        <div class="tabbar"><span class="tab on"><svg><use href="#i-house"/></svg><span>Home</span></span><span class="tab"><svg><use href="#i-gear"/></svg><span>Settings</span></span></div>
+      </div>
+
+      <!-- Home: Study to Unlock -->
+      <div class="scr scr-home scr-study" data-s="study">
+        <p class="ttl">StudyPass</p>
+        <div class="ring-card" style="--k:#5b4ff0;--track:#e6e4fb">
+          <p class="ring-label"><svg><use href="#i-lock"/></svg><span>Study to Unlock</span></p>
+          <div class="ring"><svg viewBox="0 0 100 100"><defs><linearGradient id="gS__N__" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stop-color="#8178ff"/><stop offset="1" stop-color="#5546ee"/></linearGradient></defs><circle class="ring-track" cx="50" cy="50" r="44"/><circle class="ring-arc" cx="50" cy="50" r="44" stroke="url(#gS__N__)"/></svg>
+            <div class="ring-num"><b data-num>6</b><span>min of study left</span></div></div>
+          <p class="ring-note">Your apps are locked. Study to unlock&nbsp;them.</p>
+          <p class="ring-sess"><svg><use href="#i-repeat"/></svg><span>1 of 3 study sessions done today</span></p>
+        </div>
+        <div class="btn-main"><svg><use href="#i-book"/></svg><span>Open Flashcards</span></div>
+        <div class="rows">
+          <div class="row"><span class="tile" style="background:linear-gradient(#ffb340,#ff8a00)"><svg><use href="#i-bolt"/></svg></span><span class="row-tx"><span class="row-t">Use an Override</span><span class="row-s">1 override left today</span></span><svg class="row-chev"><use href="#i-chev"/></svg></div>
+          <div class="row row-off"><span class="tile" style="background:#c7c7cc"><svg><use href="#i-moon"/></svg></span><span class="row-tx"><span class="row-t">Done Studying for Today</span><span class="row-s">Open a study app first.</span></span><svg class="row-chev"><use href="#i-chev"/></svg></div>
+        </div>
+        <div class="tabbar"><span class="tab on"><svg><use href="#i-house"/></svg><span>Home</span></span><span class="tab"><svg><use href="#i-gear"/></svg><span>Settings</span></span></div>
+      </div>
+
+      <!-- Home: Done for Today -->
+      <div class="scr scr-home scr-done" data-s="done">
+        <p class="ttl">StudyPass</p>
+        <div class="ring-card" style="--k:#c63ddf;--track:#f6e2f8">
+          <p class="ring-label"><svg><use href="#i-moon"/></svg><span>Done for Today</span></p>
+          <div class="ring ring-full"><svg viewBox="0 0 100 100"><defs><linearGradient id="gD__N__" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ec62f7"/><stop offset="1" stop-color="#c02fd8"/></linearGradient></defs><circle class="ring-arc" cx="50" cy="50" r="44" stroke="url(#gD__N__)" style="stroke-dashoffset:0"/></svg>
+            <div class="ring-num"><svg class="ring-moon"><use href="#i-moon"/></svg></div></div>
+          <p class="ring-note">Your apps are unlocked until 4:00&nbsp;AM.</p>
+          <p class="ring-sess"><svg><use href="#i-repeat"/></svg><span>3 of 3 study sessions done today</span></p>
+        </div>
+        <div class="btn-main btn-gray"><svg><use href="#i-back"/></svg><span>Start Counting Again</span></div>
+        <div class="tabbar"><span class="tab on"><svg><use href="#i-house"/></svg><span>Home</span></span><span class="tab"><svg><use href="#i-gear"/></svg><span>Settings</span></span></div>
+      </div>
+
+      <!-- Screen Time shield -->
+      <div class="scr scr-shield" data-s="shield">
+        <div class="shield-mid">
+          <svg class="shield-cap"><use href="#i-cap"/></svg>
+          <p class="shield-t">Study Time</p>
+          <p class="shield-s">Study 10 min to unlock</p>
+        </div>
+        <div class="shield-btn"><span>Open Flashcards</span></div>
+        <p class="shield-other">Other Options</p>
+      </div>
+
+      <!-- A study app (a generic flashcards app) -->
+      <div class="scr scr-cards" data-s="cards">
+        <div class="fc-nav"><span class="fc-back"><svg><use href="#i-chev"/></svg>Decks</span><b>French</b><span class="fc-due">18 due</span></div>
+        <div class="fc-bar"><i data-fc-bar></i></div>
+        <div class="fc-card">
+          <p class="fc-front">la bibliothèque</p>
+          <p class="fc-back-side">the library</p>
+          <p class="fc-hint">Tap to show answer</p>
+        </div>
+        <div class="fc-btns"><span style="--b:#ffe3df;--c:#d6372a">Again<small>1m</small></span><span style="--b:#fff0d4;--c:#b8620a">Hard<small>6m</small></span><span style="--b:#daf4e2;--c:#16843a">Good<small>10m</small></span><span style="--b:#dfe8ff;--c:#2a5fd8">Easy<small>4d</small></span></div>
+      </div>
+
+      <!-- Lock Screen: widgets + a heads-up notification -->
+      <div class="scr scr-lock" data-s="lock">
+        <p class="lk-date">Wednesday, November 18</p>
+        <p class="lk-time">9:41</p>
+        <div class="lk-widgets">
+          <span class="lk-circ"><svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="42" fill="none" stroke="rgba(255,255,255,.3)" stroke-width="9"/><circle cx="50" cy="50" r="42" fill="none" stroke="#fff" stroke-width="9" stroke-linecap="round" stroke-dasharray="264" stroke-dashoffset="70" transform="rotate(-90 50 50)"/></svg><svg class="lk-ic"><use href="#i-book"/></svg></span>
+          <span class="lk-rect"><svg><use href="#i-book"/></svg><span><b>Open Flashcards</b><small>Free</small></span></span>
+        </div>
+        <div class="lk-note">
+          <img src="img/icon-64.png" alt="" width="32" height="32">
+          <span class="lk-note-tx"><span class="lk-app">StudyPass<small>now</small></span><b>5 min of app time left</b><span>Then you'll owe 10 min of study.</span></span>
+        </div>
+        <div class="lk-bottom"><i></i><i></i></div>
+      </div>
+
+      <i class="home-ind"></i>
+    </div>
+  </div>
+</template>
+
+<header class="top" id="top">
+  <a class="brand" href="./" aria-label="StudyPass home">
+    <img src="img/icon-180.png" alt="" width="28" height="28">
+    <span>StudyPass</span>
+  </a>
+  <nav class="top-links" aria-label="Sections">
+    <a href="#how">How it works</a>
+    <a href="#features">Features</a>
+    <a href="#plans">Plans</a>
+    <a href="#faq">FAQ</a>
+  </nav>
+  <div class="top-actions">
+    <a class="get-pill" href="#get" data-app-store>Get StudyPass</a>
+    <button class="menu-btn" type="button" aria-expanded="false" aria-controls="menu" aria-label="Menu"><span></span><span></span></button>
+  </div>
+</header>
+
+<div class="menu" id="menu" hidden>
+  <nav aria-label="Menu">
+    <a href="#how">How it works</a>
+    <a href="#features">Features</a>
+    <a href="#family">For families</a>
+    <a href="#plans">Plans</a>
+    <a href="#faq">FAQ</a>
+    <a href="support.html">Support</a>
+  </nav>
+  <p class="menu-foot"><a href="../">Kebby Studios</a> · <a href="privacy.html">Privacy</a></p>
+</div>
+
+<main>
+  <!-- HERO -->
+  <section class="hero" id="hero">
+    <div class="hero-glow" aria-hidden="true"><i></i><i></i><i></i></div>
+    <div class="hero-copy">
+      <p class="eyebrow">For iPhone · Built on Screen Time</p>
+      <h1>Study to unlock your&nbsp;apps.</h1>
+      <p class="hero-body">Use your apps for a while. Then StudyPass locks them until you've studied. Earn your screen time, one session at a&nbsp;time.</p>
+      <div class="cta-row">
+        <a class="store-btn" href="#get" data-app-store>
+          <svg aria-hidden="true"><use href="#i-apple"/></svg>
+          <span><small>Coming soon to the</small>App Store</span>
+        </a>
+        <a class="ghost-btn" href="#how">See how it works <svg aria-hidden="true"><use href="#i-down"/></svg></a>
+      </div>
+      <ul class="hero-facts">
+        <li>Free for a month</li><li>No account</li><li>No tracking</li>
+      </ul>
+    </div>
+
+    <div class="hero-scene" aria-hidden="true">
+      <div class="scene">
+        <div class="phone phone-hero" data-phone data-screen="study"></div>
+        <div class="pass">
+          <div class="pass-main">
+            <div class="pass-top"><img src="img/icon-64.png" alt="" width="22" height="22"><b>StudyPass</b><span class="pass-no">No. 042</span></div>
+            <p class="pass-label">Study session</p>
+            <div class="pass-mid"><p class="pass-big">10<small>min</small></p><span class="pass-stamp">Unlocked</span></div>
+            <div class="pass-row"><span>Earned<b>9:41 AM</b></span><span>Valid until<b>4:00 AM</b></span></div>
+          </div>
+          <div class="pass-stub"><span>Admit</span><b>All apps</b></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- INTRO -->
+  <section class="intro">
+    <p class="intro-copy">StudyPass splits your screen time in two: <em class="hl-apps">time for your apps</em> and <em class="hl-study">time for study</em>. Spend one, and earn it back with the&nbsp;other.</p>
+  </section>
+
+  <!-- REVEAL 1: App Time -->
+  <section class="reveal" id="how" style="--block:var(--apps);--block-ink:#a34a17" aria-labelledby="how-name">
+    <div class="reveal-pin">
+      <h2 class="reveal-title" aria-hidden="true"><span class="rt-line">Scroll</span><span class="rt-line">less</span></h2>
+      <div class="reveal-mask">
+        <div class="reveal-inner">
+          <div class="reveal-head">
+            <p class="kicker">Step one · Scroll less</p>
+            <h3 class="reveal-name" id="how-name">App Time</h3>
+          </div>
+          <div class="reveal-stage">
+            <div class="phone phone-reveal" data-phone data-screen="free"></div>
+            <ol class="steps">
+              <li class="step" data-screen="free" data-count="free" data-from="10" data-to="5">
+                <p class="step-title">Your apps. <br>Your limits.</p>
+                <p class="step-note">Pick the apps, categories and websites you want to use less, then choose how long you get: anywhere from 5&nbsp;minutes to 4&nbsp;hours.</p>
+              </li>
+              <li class="step" data-screen="lock">
+                <p class="step-title">A heads-up <br>first.</p>
+                <p class="step-note">A notification a few minutes before your apps lock, so nothing ends mid-sentence. Widgets show where you stand.</p>
+              </li>
+              <li class="step" data-screen="shield">
+                <p class="step-title">Time's up? <br>They lock.</p>
+                <p class="step-note">Screen Time covers them with a shield. It's a real lock, not a reminder you can swipe&nbsp;away.</p>
+              </li>
+            </ol>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- REVEAL 2: Study Time -->
+  <section class="reveal" id="study" style="--block:var(--study);--block-ink:#2f2596" aria-labelledby="study-name">
+    <div class="reveal-pin">
+      <h2 class="reveal-title" aria-hidden="true"><span class="rt-line">Study</span><span class="rt-line">more</span></h2>
+      <div class="reveal-mask">
+        <div class="reveal-inner">
+          <div class="reveal-head">
+            <p class="kicker">Step two · Study more</p>
+            <h3 class="reveal-name" id="study-name">Study Time</h3>
+          </div>
+          <div class="reveal-stage">
+            <div class="phone phone-reveal" data-phone data-screen="cards"></div>
+            <ol class="steps">
+              <li class="step" data-screen="cards" data-cards>
+                <p class="step-title">One tap <br>to study.</p>
+                <p class="step-note">The shield's button opens your study app: flashcards, a language app, your notes, or any app or website you learn&nbsp;with.</p>
+              </li>
+              <li class="step" data-screen="study" data-count="study" data-from="10" data-to="0" data-weight="1.25">
+                <p class="step-title">Study, and <br>they unlock.</p>
+                <p class="step-note">Stay for your Study Time, from 2&nbsp;minutes to 2&nbsp;hours. StudyPass counts it on its own, and your apps open&nbsp;again.</p>
+              </li>
+              <li class="step" data-screen="done" data-weight="0.5">
+                <p class="step-title">Done for <br>the day.</p>
+                <p class="step-note">Finish your study sessions and your apps stay unlocked until tomorrow. Finished early? Tap Done Studying for&nbsp;Today.</p>
+              </li>
+            </ol>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- NUMBERS -->
+  <section class="numbers" aria-label="StudyPass at a glance">
+    <div class="num"><b>1 tap</b><span>from a locked app to your study app</span></div>
+    <div class="num"><b>5m–4h</b><span>of App Time before your apps lock</span></div>
+    <div class="num"><b>2m–2h</b><span>of Study Time to unlock them again</span></div>
+    <div class="num"><b>0</b><span>bytes of data collected. Ever.</span></div>
+  </section>
+
+  <!-- WHY -->
+  <section class="why" id="why">
+    <div class="why-grid">
+
+      <article class="why-block">
+        <div class="why-media media-apps" aria-hidden="true">
+          <div class="chips"><div class="chips-row">
+            <span>Anki</span><span>Duolingo</span><span>Quizlet</span><span>Notion</span><span>GoodNotes</span><span>Khan Academy</span><span>Brilliant</span><span>Memrise</span>
+            <span>Anki</span><span>Duolingo</span><span>Quizlet</span><span>Notion</span><span>GoodNotes</span><span>Khan Academy</span><span>Brilliant</span><span>Memrise</span>
+          </div><div class="chips-row rev">
+            <span>Babbel</span><span>NotebookLM</span><span>Notability</span><span>Brainscape</span><span>OneNote</span><span>Busuu</span><span>Any website</span><span>Your notes</span>
+            <span>Babbel</span><span>NotebookLM</span><span>Notability</span><span>Brainscape</span><span>OneNote</span><span>Busuu</span><span>Any website</span><span>Your notes</span>
+          </div></div>
+          <div class="found"><p class="found-h">Found on your iPhone</p><p class="found-s">StudyPass can open these for you.</p></div>
+        </div>
+        <h3>Works with how you study.</h3>
+        <p>Flashcards, a language app, your notes, or any app or website you learn with. StudyPass spots the study apps on your iPhone and opens them for you.</p>
+      </article>
+
+      <article class="why-block">
+        <div class="why-media media-hard" aria-hidden="true">
+          <div class="mini-list">
+            <div class="ml-row"><span class="tile" style="background:linear-gradient(#ff6a5c,#ff3b30);--cut:#ff4b3e"><svg><use href="#i-alert"/></svg></span><span>Hardcore Mode</span><i class="tog"></i></div>
+            <div class="ml-row"><span class="tile" style="background:#8e8e93;--cut:#8e8e93"><svg><use href="#i-clockcheck"/></svg></span><span>Lock Date &amp; Time</span><i class="tog"></i></div>
+            <div class="ml-row"><span class="tile" style="background:#8e8e93;--cut:#8e8e93"><svg><use href="#i-trash"/></svg></span><span>Disable Deleting Apps</span><i class="tog"></i></div>
+            <div class="ml-row"><span class="tile" style="background:#8e8e93"><svg><use href="#i-pause"/></svg></span><span>Disable Pause</span><i class="tog"></i></div>
+          </div>
+        </div>
+        <h3>Hardcore Mode for no excuses.</h3>
+        <p>Lock the clock, block deleting apps while you're locked, and turn off Pause. A 6-digit passcode guards Settings. All of it opt-in.</p>
+      </article>
+
+      <article class="why-block">
+        <div class="why-media media-life" aria-hidden="true">
+          <div class="sheet">
+            <p class="sheet-h">Use an Override</p>
+            <div class="sheet-opt"><span class="tile" style="background:linear-gradient(#5ac8fa,#0a84ff);--cut:#2a9cfc"><svg><use href="#i-plus1"/></svg></span><span><b>One More Minute</b><small>Finish what you're doing</small></span></div>
+            <div class="sheet-opt"><span class="tile" style="background:linear-gradient(#ffb340,#ff8a00)"><svg><use href="#i-bolt"/></svg></span><span><b>Emergency Override</b><small>1 override left today</small></span></div>
+            <div class="sheet-opt"><span class="tile" style="background:linear-gradient(#a78bfa,#7c5cf0)"><svg><use href="#i-pause"/></svg></span><span><b>Pause</b><small>Paused until you resume</small></span></div>
+          </div>
+        </div>
+        <h3>Firm, not cruel.</h3>
+        <p>Emergency overrides and One More Minute for the moments you really need an app. Emergency Stop turns everything off when it counts.</p>
+      </article>
+
+      <article class="why-block">
+        <div class="why-media media-priv" aria-hidden="true">
+          <div class="priv-core"><svg><use href="#i-shield"/></svg></div>
+          <span class="orb o1">No account</span><span class="orb o2">No ads</span><span class="orb o3">No tracking</span><span class="orb o4">No servers</span>
+        </div>
+        <h3>Private by design.</h3>
+        <p>StudyPass has no servers and collects no data. Screen Time only gives it coded tokens for your apps, never their names or your history.</p>
+      </article>
+
+    </div>
+  </section>
+
+  <!-- FEATURES -->
+  <section class="feats" id="features">
+    <div class="feats-head">
+      <h2 class="sec-title">Make it yours</h2>
+      <div class="feats-nav">
+        <button type="button" class="round-btn" data-dir="-1" aria-label="Previous features"><svg style="transform:scaleX(-1)"><use href="#i-arrow"/></svg></button>
+        <button type="button" class="round-btn" data-dir="1" aria-label="Next features"><svg><use href="#i-arrow"/></svg></button>
+      </div>
+    </div>
+    <div class="feats-scroll" tabindex="0" role="region" aria-label="Features. Scroll sideways to see more.">
+      <article class="feat"><span class="feat-ic" style="--c:var(--study)"><svg><use href="#i-stack"/></svg></span><h3>Study Sessions</h3><p>Choose how many sessions count each day. Finish them and apps stay unlocked until tomorrow.</p></article>
+      <article class="feat"><span class="feat-ic" style="--c:var(--apps)"><svg><use href="#i-cal"/></svg></span><h3>Schedule</h3><p>Only limit apps during the hours and days you choose. School nights, work hours, exam season.</p></article>
+      <article class="feat"><span class="feat-ic" style="--c:var(--done)"><svg><use href="#i-moon"/></svg></span><h3>Done for Today</h3><p>Finished early? Unlock everything until your reset time, then it starts fresh tomorrow.</p></article>
+      <article class="feat"><span class="feat-ic" style="--c:var(--peach)"><svg><use href="#i-plus1"/></svg></span><h3>One More Minute</h3><p>Sixty seconds to finish that message. Limit it to once a day if you know yourself.</p></article>
+      <article class="feat"><span class="feat-ic" style="--c:var(--study)"><svg><use href="#i-text"/></svg></span><h3>Custom Shield Text</h3><p>Make the lock say what you need to hear. "Exam in 9 days" works wonders.</p></article>
+      <article class="feat"><span class="feat-ic" style="--c:var(--apps)"><svg><use href="#i-bell"/></svg></span><h3>Notifications</h3><p>A warning a few minutes before apps lock, and a ping the moment they unlock.</p></article>
+      <article class="feat"><span class="feat-ic" style="--c:var(--peach)"><svg><use href="#i-grid"/></svg></span><h3>Widgets</h3><p>Home Screen and Lock Screen widgets show how much study is left and open your study app.</p></article>
+      <article class="feat"><span class="feat-ic" style="--c:var(--done)"><svg><use href="#i-key"/></svg></span><h3>Passcode</h3><p>Six digits guard Settings, and optionally overrides and Done Studying for Today.</p></article>
+      <article class="feat"><span class="feat-ic" style="--c:var(--study)"><svg><use href="#i-pause"/></svg></span><h3>Pause</h3><p>Need a break? Pause until you resume. Or switch Pause off in Hardcore Mode.</p></article>
+    </div>
+  </section>
+
+  <!-- FAMILY -->
+  <section class="family" id="family">
+    <h2 class="sec-title">For you, or for your&nbsp;child</h2>
+    <p class="sec-sub">Pick who it's for when you set it up. Everything else works the same.</p>
+    <div class="who">
+      <article class="who-card">
+        <span class="who-ic" style="--c:var(--peach)"><svg><use href="#i-book"/></svg></span>
+        <p class="who-k">Myself</p>
+        <h3>Your own iPhone.</h3>
+        <p>Set your apps, your times and how strict it should be. Every feature is there, and you can change it all later in Settings.</p>
+      </article>
+      <article class="who-card">
+        <span class="who-ic" style="--c:var(--apps)"><svg><use href="#i-family"/></svg></span>
+        <p class="who-k">My Child</p>
+        <h3>Your child's iPhone.</h3>
+        <p>Approve StudyPass with your own Apple Account through Family Sharing. Its Screen Time access can't be turned off without you, and one purchase covers the family.</p>
+      </article>
+    </div>
+  </section>
+
+  <!-- PLANS -->
+  <section class="plans" id="plans">
+    <h2 class="sec-title">Try it free for a&nbsp;month</h2>
+    <p class="sec-sub">Full access to StudyPass, free. Then pick the plan that works for you.</p>
+    <div class="plan-grid">
+      <article class="plan">
+        <p class="plan-name">Monthly</p>
+        <p class="plan-price">$0.99<small>/month</small></p>
+        <p class="plan-note">Cancel anytime.</p>
+      </article>
+      <article class="plan plan-best">
+        <span class="plan-tag">Save 15%</span>
+        <p class="plan-name">Yearly</p>
+        <p class="plan-price">$9.99<small>/year</small></p>
+        <p class="plan-note">Just $0.83 a month.</p>
+      </article>
+      <article class="plan">
+        <p class="plan-name">Lifetime</p>
+        <p class="plan-price">$49.99<small>once</small></p>
+        <p class="plan-note">Pay once, yours to keep.</p>
+      </article>
+    </div>
+    <ol class="timeline">
+      <li><span class="tl-dot" style="--c:#34c759"><svg><use href="#i-lock"/></svg></span><b>Today</b><span>Full access to StudyPass, free.</span></li>
+      <li><span class="tl-dot" style="--c:#5b4ff0"><svg><use href="#i-check"/></svg></span><b>Anytime</b><span>Cancel in your first month and you won't be charged.</span></li>
+      <li><span class="tl-dot" style="--c:#c63ddf"><svg><use href="#i-cal"/></svg></span><b>After 1 month</b><span>Your plan starts. Family Sharing: one purchase covers your family.</span></li>
+    </ol>
+    <p class="fine">Prices in USD and may vary by country. Subscriptions renew automatically unless cancelled at least 24 hours before the end of the current period. Manage them in Settings → your name → Subscriptions.</p>
+  </section>
+
+  <!-- FAQ -->
+  <section class="faq" id="faq">
+    <h2 class="sec-title">Questions</h2>
+    <div class="faq-list">
+      <details>
+        <summary>Which study apps does it work with?</summary>
+        <p>Any app or website you pick. StudyPass recognizes many popular ones, like Anki, Duolingo, Quizlet, Notion, GoodNotes and Khan Academy, and can open them straight from the shield. Time in every study app you pick counts.</p>
+      </details>
+      <details>
+        <summary>Is the lock real?</summary>
+        <p>Yes. StudyPass uses Apple's Screen Time, so your apps are covered by the same shield iOS uses for its own limits. It isn't a reminder you can dismiss.</p>
+      </details>
+      <details>
+        <summary>Can StudyPass see what I do on my phone?</summary>
+        <p>No. Screen Time gives StudyPass coded tokens for the apps you choose, never their names or your usage history. Everything stays on your iPhone, and StudyPass has no servers. Read the <a href="privacy.html">privacy policy</a>.</p>
+      </details>
+      <details>
+        <summary>How do I turn it off right away?</summary>
+        <p>Settings → Help → Diagnostics → <strong>Emergency Stop</strong>. It unlocks everything after a 15-second wait. You can also remove StudyPass in iOS Settings → Screen Time → Apps with Screen Time Access.</p>
+      </details>
+      <details>
+        <summary>Can I set it up on my child's iPhone?</summary>
+        <p>Yes. Choose "My Child" during setup and approve StudyPass with your own Apple Account. Your child needs to be in your Family Sharing group. Plans work with Family Sharing.</p>
+      </details>
+      <details>
+        <summary>How do I cancel my subscription?</summary>
+        <p>In StudyPass: Settings → Help → Manage Subscription. Or in iOS Settings → your name → Subscriptions → StudyPass. If you cancel during the free month, you won't be charged.</p>
+      </details>
+      <details>
+        <summary>I bought a plan on another iPhone, or my family has one.</summary>
+        <p>On the plan page, tap <strong>Restore Purchases</strong>.</p>
+      </details>
+      <details>
+        <summary>What do I need?</summary>
+        <p>An iPhone with iOS 26.5 or later. Screen Time must be on, and StudyPass will walk you through allowing it.</p>
+      </details>
+    </div>
+    <p class="faq-more">More help, including what to do if you forget your passcode, is on the <a href="support.html">support page</a>. Or email <a href="mailto:kebbystudios@gmail.com?subject=StudyPass">kebbystudios@gmail.com</a>.</p>
+  </section>
+
+  <!-- CLOSING CTA -->
+  <section class="closing" id="get">
+    <img class="closing-icon" src="img/icon-512.png" alt="" width="120" height="120">
+    <h2>Earn your screen&nbsp;time.</h2>
+    <p>StudyPass is coming soon to the App Store for iPhone.</p>
+    <a class="store-btn store-btn-light" href="#get" data-app-store>
+      <svg aria-hidden="true"><use href="#i-apple"/></svg>
+      <span><small>Coming soon to the</small>App Store</span>
+    </a>
+  </section>
+</main>
+
+<footer class="foot">
+  <div class="foot-cols">
+    <div><h4>StudyPass</h4><a href="#how">How it works</a><a href="#features">Features</a><a href="#plans">Plans</a></div>
+    <div><h4>Help</h4><a href="#faq">FAQ</a><a href="support.html">Support</a><a href="mailto:kebbystudios@gmail.com?subject=StudyPass">Contact</a></div>
+    <div><h4>Legal</h4><a href="privacy.html">Privacy Policy</a><a href="https://www.apple.com/legal/internet-services/itunes/dev/stdeula/">Terms of Use</a></div>
+    <div><h4>Kebby Studios</h4><a href="../">Home</a><a href="../arc/">Arc</a></div>
+  </div>
+  <p class="foot-legal">&copy; <span data-year>2026</span> Kebby Studios. StudyPass uses Apple's Screen Time. Apple, iPhone and Screen Time are trademarks of Apple Inc.</p>
+</footer>
+
+<script src="js/main.js"></script>
+</body>
+</html>
