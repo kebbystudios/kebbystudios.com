@@ -114,7 +114,7 @@
     dots.className = "step-dots";
     dots.setAttribute("aria-hidden", "true");
     steps.forEach(() => dots.appendChild(document.createElement("i")));
-    sec.querySelector(".reveal-inner").appendChild(dots);
+    sec.querySelector("[data-phone]").after(dots); // under the phone; desktop CSS pins it to the bottom
     return {
       sec, steps, dots: [...dots.children],
       weights: steps.map((st) => +(st.dataset.weight || 1)), // how much scroll each step gets
