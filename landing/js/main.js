@@ -21,6 +21,7 @@
   const ticksEl = document.getElementById("ticks");
   const hint = document.querySelector(".hint");
   const cursor = document.querySelector(".cursor");
+  const cursorLabel = cursor.querySelector(".cursor-label");
   const aboutBtn = document.querySelector(".about-btn");
   const about = document.getElementById("about");
   const ambL = document.querySelector(".amb-l");
@@ -32,9 +33,8 @@
   // Fallback colors for cards without a video to sample: [left, right, needle].
   const AMBIENT = {
     arc: ["#0f2a3c", "#0b2233", "#5cc8ff"],
-    soon: ["#1e1834", "#2a2150", "#b9a8ff"],
     studypass: ["#3a1f2e", "#221a55", "#c3b4ff"],
-    studio: ["#2c1f14", "#21170f", "#f0b37e"],
+    blank: ["#0b0c0d", "#0b0c0d", "#8a8f96"],
   };
 
   // ---------- Slots: the cards, repeated so the loop never shows a seam ----------
@@ -46,7 +46,8 @@
     for (const li of originals) {
       const copy = li.cloneNode(true);
       copy.setAttribute("aria-hidden", "true");
-      copy.querySelector("a").tabIndex = -1;
+      const a = copy.querySelector("a");
+      if (a) a.tabIndex = -1;
       track.appendChild(copy);
     }
   }
@@ -90,8 +91,11 @@
   }
 
   // ---------- Motion state ----------
-  let pos = reduce ? 0 : 2.6;     // intro: the dial spins in and lands on Arc
-  let target = 0;
+  // Each visit lands on a random app (never the blank card); the dial spins in to it.
+  const apps = originals.map((li, u) => (li.dataset.href ? u : -1)).filter((u) => u >= 0);
+  const START = apps.length ? apps[Math.floor(Math.random() * apps.length)] : 0;
+  let pos = reduce ? START : START + 2.6;
+  let target = START;
   let lastIndex = -1;
   let dragging = false;
   let opening = null;             // the open animation, when running
@@ -157,7 +161,7 @@
   function sampleAmbient(s, now) {
     if (now - lastSample < 160) return;
     lastSample = now;
-    const fall = AMBIENT[s.id] || AMBIENT.studio;
+    const fall = AMBIENT[s.id] || AMBIENT.blank;
     const v = s.video;
     let left = null, right = null;
     if (v && v.readyState >= 2 && !v.paused) {
@@ -363,7 +367,7 @@
 
   function activate(s) {
     if (s.href) return open(s);
-    if (s.id === "studio") return toggleAbout(true);
+    if (s.id === "blank") return;
     // Not out yet: a small shake, like a locked door.
     const el = s.el;
     el.animate([
@@ -416,10 +420,17 @@
         s.pxTo = -nx * Math.min(28, w * 0.075); s.pyTo = -ny * Math.min(20, hh * 0.075);
       } else { s.pxTo = 0; s.pyTo = 0; }
     }
-    // A plain circle: full over the centered card, smaller over the neighbors.
-    const cls = hit ? (Math.abs(wrap(hit.k - pos)) < 0.5 ? "big" : "mid") : "";
+    // A plain circle over the centered card; a smaller one with an arrow over
+    // the neighbors. The blank card gets the plain dot.
+    let cls = "", label = "";
+    if (hit) {
+      const d = wrap(hit.k - pos);
+      if (Math.abs(d) >= 0.5) { cls = "mid"; label = d < 0 ? "←" : "→"; }
+      else if (hit.href) cls = "big";
+    }
     cursor.classList.toggle("big", cls === "big");
     cursor.classList.toggle("mid", cls === "mid");
+    if (label) cursorLabel.textContent = label;
     cursor.classList.toggle("on", pointer.inside && !opening && !body.classList.contains("about-open"));
   }
   function updateCursor() {

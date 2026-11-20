@@ -45,23 +45,15 @@
       <li class="card" data-id="studypass" data-name="StudyPass" data-kind="Study to Unlock Your Apps" data-href="studypass/">
         <a class="card-link" href="studypass/" aria-label="StudyPass, study to unlock your apps">
           <div class="card-media">
-            <picture>
-              <source media="(max-width: 699px) and (orientation: portrait)" srcset="landing/media/studypass-tall.jpg">
-              <img class="card-video" src="landing/media/studypass.jpg" alt="" loading="lazy" decoding="async">
-            </picture>
+            <video class="card-video card-video-light" muted loop playsinline preload="metadata" poster="landing/media/studypass.jpg"
+                   data-src="landing/media/studypass.mp4" data-src-sm="landing/media/studypass-sm.mp4"
+                   data-src-tall="landing/media/studypass-tall.mp4" data-poster-tall="landing/media/studypass-tall.jpg"></video>
           </div>
         </a>
       </li>
-      <li class="card card-studio" data-id="studio" data-name="Studio" data-kind="About Kebby Studios">
-        <a class="card-link" href="#about" aria-label="About Kebby Studios">
-          <div class="card-media studio-card">
-            <div class="studio-lines" aria-hidden="true"></div>
-            <div class="studio-copy">
-              <span class="mono">Kebby Studios</span>
-              <strong>Small apps, made with&nbsp;care.</strong>
-            </div>
-          </div>
-        </a>
+      <!-- A blank third card, so the neighbors on either side aren't the same app. -->
+      <li class="card card-blank" data-id="blank" data-name="" data-kind="" aria-hidden="true">
+        <div class="card-link"><div class="card-media"></div></div>
       </li>
     </ul>
   </main>
@@ -74,7 +66,7 @@
   </footer>
   <div class="hint mono" aria-hidden="true">Scroll or drag</div>
 
-  <div class="cursor" aria-hidden="true"></div>
+  <div class="cursor" aria-hidden="true"><span class="cursor-label"></span></div>
 
   <section class="about" id="about" aria-hidden="true" aria-labelledby="about-title">
     <div class="about-inner">
