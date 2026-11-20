@@ -9,6 +9,7 @@
   const story = document.getElementById("story");
   const stage = story.querySelector(".stage");
   const device = stage.querySelector(".device");
+  const clip = stage.querySelector(".device-clip");
   const frame = device.querySelector(".frame");
   const screen = device.querySelector(".screen");
   const light = stage.querySelector(".stage-light");
@@ -105,6 +106,8 @@
     shot = (i + shotImgs.length) % shotImgs.length;
     shotImgs.forEach((img, k) => img.classList.toggle("on", k === shot));
     shotItems.forEach((li, k) => li.classList.toggle("on", k === shot));
+    // On phones only the current item shows, so the text's height changes.
+    if (L && L.compact) request();
   }
   function setShots(opacity, playing) {
     const el = layers.settings;
@@ -193,13 +196,30 @@
     preload(u);
 
     // Text
-    setPanel("hero", 1 - a(22.5, 63));
-    setPanel("focus", a(90, 117) - a(162, 184.5));
-    setPanel("speed", a(220.5, 243) - a(333, 355.5));
-    setPanel("trips", a(355.5, 378) - a(517.5, 540));
-    setPanel("stats", a(549, 576) - a(697.5, 720));
-    setPanel("settings", a(711, 738) - a(877.5, 900));
-    setPanel("chrono", a(891, 918));
+    const text = {
+      hero: 1 - a(22.5, 63),
+      focus: a(90, 117) - a(162, 184.5),
+      speed: a(220.5, 243) - a(333, 355.5),
+      trips: a(355.5, 378) - a(517.5, 540),
+      stats: a(549, 576) - a(697.5, 720),
+      settings: a(711, 738) - a(877.5, 900),
+      chrono: a(891, 918),
+    };
+    for (const [name, op] of Object.entries(text)) setPanel(name, clamp(op));
+
+    // Phones and tall windows: fade the phone out above the text that's
+    // showing (as much as that text is showing), so they never overlap.
+    if (L.compact) {
+      const none = vh + 120;
+      let cut = none;
+      for (const [name, op] of Object.entries(text)) {
+        const o = clamp(op);
+        if (o > 0.001) cut = Math.min(cut, lerp(none, panels[name].offsetTop, o));
+      }
+      clip.style.setProperty("--cut", `${cut.toFixed(1)}px`);
+    } else {
+      clip.style.removeProperty("--cut");
+    }
 
     nav.classList.toggle("solid", window.scrollY > story.offsetTop + story.offsetHeight - vh * 1.05);
   }

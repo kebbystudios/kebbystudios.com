@@ -97,6 +97,15 @@ p { margin: 0; }
   will-change: opacity;
 }
 
+/* Holds the phone. On phones and tall windows main.js sets --cut to the top
+   of the text, and the phone fades out just above it so the text never
+   sits on top of the screen. */
+.device-clip { position: absolute; inset: 0; z-index: 3; pointer-events: none; }
+.compact .device-clip {
+  -webkit-mask-image: linear-gradient(180deg, #000 calc(var(--cut, 200vh) - 88px), transparent calc(var(--cut, 200vh) - 6px));
+  mask-image: linear-gradient(180deg, #000 calc(var(--cut, 200vh) - 88px), transparent calc(var(--cut, 200vh) - 6px));
+}
+
 /* The phone. Sizes come from main.js: --dw/--dh (body), --sw/--sh (screen). */
 .device {
   position: absolute;
@@ -335,6 +344,7 @@ p { margin: 0; }
   bottom: max(24px, env(safe-area-inset-bottom));
   transform: none;
   text-align: center;
+  z-index: 4;
 }
 .compact .panel h1 { font-size: clamp(30px, 8.4vw, 44px); }
 .compact .panel h2 { font-size: clamp(26px, 7.4vw, 38px); margin-bottom: 10px; }
