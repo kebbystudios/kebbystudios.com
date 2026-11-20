@@ -126,8 +126,13 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
   transform: translate3d(var(--px, 0px), var(--py, 0px), 0);
   will-change: transform;
 }
-.card-video { width: 100%; height: 100%; object-fit: cover; display: block; background: #05070a; pointer-events: none; }
-.card-video-light { background: #faf8f6; }
+/* The still (the app's name and slogan) is always there; the clip fades in
+   over it only while it's actually playing, so a blocked or slow clip never
+   shows as a black box. */
+.card-still, .card-video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; pointer-events: none; }
+.card-still { background: #05070a; }
+.card-video { opacity: 0; transition: opacity .5s; }
+.card-video.live { opacity: 1; }
 
 /* The blank card: just a black box. */
 .card-blank .card-media { background: #000; }

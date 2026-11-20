@@ -59,6 +59,7 @@
     href: el.dataset.href || null,
     media: el.querySelector(".card-media"),
     video: el.querySelector("video"),
+    still: el.querySelector(".card-still"),
     hover: 0,
     hoverTo: 0,
     px: 0, py: 0, pxTo: 0, pyTo: 0,
@@ -82,11 +83,13 @@
     X1 = (cw * (1 + SIDE)) / 2 + gap;
     X2 = cw * SIDE + gap;
     for (const s of slots) {
-      if (!s.video) continue;
-      const poster = narrow && s.video.dataset.posterTall;
-      if (poster && !s.video.dataset.posterWide) s.video.dataset.posterWide = s.video.getAttribute("poster");
-      if (s.video.dataset.posterWide) s.video.poster = poster || s.video.dataset.posterWide;
-      if (s.video.dataset.chosen) chooseSource(s);
+      const st = s.still;
+      if (st && st.dataset.tall) {
+        if (!st.dataset.wide) st.dataset.wide = st.getAttribute("src");
+        const want = narrow ? st.dataset.tall : st.dataset.wide;
+        if (st.getAttribute("src") !== want) st.src = want;
+      }
+      if (s.video && s.video.dataset.chosen) chooseSource(s);
     }
   }
 
@@ -129,9 +132,26 @@
     v.src = want;
     if (t) v.addEventListener("loadedmetadata", () => { v.currentTime = t; }, { once: true });
   }
+  // On Save Data or a 2G connection the clips never load; the stills stand in.
+  const conn = navigator.connection;
+  const stillsOnly = !!conn && (conn.saveData || /2g/.test(conn.effectiveType || ""));
+  // A clip shows only once frames are really arriving. If it errors, or stops
+  // to buffer for more than a moment, the still comes back until it recovers.
+  function watchClip(v) {
+    let waitTimer = 0;
+    const on = () => { clearTimeout(waitTimer); if (!v.paused && v.readyState >= 3) v.classList.add("live"); };
+    const off = () => { clearTimeout(waitTimer); v.classList.remove("live"); };
+    v.addEventListener("playing", on);
+    v.addEventListener("timeupdate", on);
+    v.addEventListener("waiting", () => { clearTimeout(waitTimer); waitTimer = setTimeout(() => { if (v.readyState < 3) off(); }, 700); });
+    v.addEventListener("error", off);
+    v.addEventListener("emptied", off);
+  }
+  for (const s of slots) if (s.video) watchClip(s.video);
+
   function setPlaying(s, on) {
     const v = s.video;
-    if (!v) return;
+    if (!v || stillsOnly) return;
     if (on) {
       if (!v.dataset.chosen) chooseSource(s);
       if (v.paused) { const p = v.play(); if (p && p.catch) p.catch(() => {}); }
@@ -164,9 +184,12 @@
     const fall = AMBIENT[s.id] || AMBIENT.blank;
     const v = s.video;
     let left = null, right = null;
-    if (v && v.readyState >= 2 && !v.paused) {
+    // Sample the clip while it plays, otherwise the still.
+    const src = v && v.classList.contains("live") && !v.paused ? v
+      : s.still && s.still.complete && s.still.naturalWidth ? s.still : null;
+    if (src) {
       try {
-        sctx.drawImage(v, 0, 0, 16, 9);
+        sctx.drawImage(src, 0, 0, 16, 9);
         const px = sctx.getImageData(0, 0, 16, 9).data;
         const acc = [[0, 0, 0, 0], [0, 0, 0, 0]];
         for (let i = 0; i < px.length; i += 4) {
@@ -462,8 +485,7 @@
   function maybePreload(now, cs) {
     if (!cs || !cs.href || opening) { settledId = null; return; }
     if (settledId !== cs.k) { settledId = cs.k; settledSince = now; return; }
-    const conn = navigator.connection;
-    if (conn && (conn.saveData || /2g/.test(conn.effectiveType || ""))) return;
+    if (stillsOnly) return;
     if (now - settledSince > 1200 && Math.abs(pos - target) < 0.01) prepare(cs.href);
   }
   stage.addEventListener("pointerdown", (e) => {
