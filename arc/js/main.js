@@ -263,11 +263,4 @@
     }
   } catch (e) {}
 
-  // Placeholder until the App Store link exists.
-  const APP_STORE_URL = "";
-  document.querySelectorAll("[data-app-store]").forEach((a) => {
-    if (APP_STORE_URL) { a.href = APP_STORE_URL; return; }
-    a.addEventListener("click", (e) => e.preventDefault());
-    a.setAttribute("title", "Arc is coming soon to the App Store");
-  });
 })();
